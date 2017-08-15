@@ -2,20 +2,19 @@ package example
 
 
 object Main extends App {
+  def partial1[A, B,C](a: A, f: (A, B) => C): B => C = {
+    (b: B) => f(a,b)
+  }
 
-  /**
-    * Test whether an array of elements is ordered, given a comparison function.
-    * @param as The array of elements to test.
-    * @param ordered A comparison function to test whether a pair of elements is ordered.
-    * @tparam A The type of elements in our array.
-    * @return Whether the array of elements is ordered.
-    */
-  def isOrdered[A](as: Array[A], ordered: (A, A) => Boolean): Boolean = {
-    def aux(n: Int): Boolean = {
-      if (n >= as.length-1) true
-      else if (!ordered(as(n), as(n+1))) false
-      else aux(n+1)
-    }
-    aux(0)
+  def curry[A, B, C](f: (A, B) => C) : A => (B => C) = {
+    (a: A) => (b: B) => f(a, b)
+  }
+
+  def uncurry[A, B, C](f: (A => (B => C))): (A, B) => C = {
+    (a, b) => f(a)(b)
+  }
+
+  def compose[A, B, C](f: B => C, g: A => B): A => C = {
+    a => f(g(a))
   }
 }
