@@ -1,28 +1,34 @@
 package example
 
 
-sealed trait MyList[+A] {
-  def sum[B >: A](implicit num: Numeric[B]): B = MyList.sum[B](this)
-}
+sealed trait MyList[+A]
 case object MyNil extends MyList[Nothing]
 case class MyCons[+A](h: A, t: MyList[A]) extends MyList[A]
 
 
 object MyList {
-  def sum[A](ints: MyList[A])(implicit num: Numeric[A]): A = ints match {
-    case MyNil => num.zero
-    case MyCons(x, xs) => num.plus(x, sum(xs))
-  }
-
-  def product(ds: MyList[Double]): Double = ds match {
-    case MyNil => 1.0
-    case MyCons(0.0, _) => 0.0
-    case MyCons(x, xs) => x * product(xs)
-  }
-
   def apply[A](as: A*): MyList[A] =
     if (as.isEmpty) MyNil
     else MyCons(as.head, apply(as.tail: _*))
+
+  def tail[A](as: MyList[A]): MyList[A] = as match {
+    case MyNil => MyNil
+    case MyCons(_, x) => x
+  }
+
+  def drop[A](as: MyList[A], n: Int): MyList[A] = (n, as) match {
+    case (0, x) => x
+    case (_, MyCons(x, xs)) => drop(xs, n-1)
+    case (_, MyNil) => MyNil
+  }
+
+  def dropWhile[A](as: MyList[A], pred: A => Boolean): MyList[A] = as match {
+    case MyNil => MyNil
+    case MyCons(x, xs) =>
+      if (pred(x)) MyCons(x, dropWhile(xs, pred))
+      else MyNil
+  }
+
 }
 
 
