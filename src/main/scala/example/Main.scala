@@ -35,6 +35,12 @@ object MyList {
       case MyCons(x, xs) => MyCons(x, append(xs, a2))
     }
 
+  def init[A](as: MyList[A]): MyList[A] = as match {
+    case MyCons(x, MyCons(y, ys)) => MyCons(x, init(MyCons(y, ys)))
+    case MyCons(x, MyNil) => MyNil
+    case MyNil => MyNil
+  }
+
 }
 
 

@@ -58,4 +58,19 @@ class MainSpec extends FlatSpec with Matchers {
     val bs: MyList[Int] = MyList()
     MyList.append(as, bs) shouldEqual MyList(1, 2, 3)
   }
+
+  "the init method" should "return all but the last elements of a list" in {
+    val as: MyList[Int] = MyList(1, 2, 3, 4, 5, 6)
+    MyList.init(as) shouldEqual MyList(1, 2, 3, 4, 5)
+  }
+
+  "the init method" should "return Nil for an empty list" in {
+    val as: MyList[Int] = MyList()
+    MyList.init(as) shouldEqual MyList()
+  }
+
+  "the init method" should "return Nil for a list of one item" in {
+    val as: MyList[Int] = MyList(1)
+    MyList.init(as) shouldEqual MyList()
+  }
 }
