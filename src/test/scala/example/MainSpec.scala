@@ -21,5 +21,9 @@ class MainSpec extends FlatSpec with Matchers {
   "the sum method" should "correctly calculate the sum of a nonempty list" in {
     val as: MyList[Int] = MyList(1, 2, 3, 4, 5, 6)
     MyList.sum(as) shouldEqual (1 + 2 + 3 + 4 + 5 + 6)
+
+    // This next line causes a compile error: there's no implicit evidence that a string is a numeric!
+    // MyList("a", "b").sum
+
   }
 }
