@@ -1,5 +1,7 @@
 package example
 
+import scala.annotation.tailrec
+
 
 sealed trait MyList[+A]
 case object MyNil extends MyList[Nothing]
@@ -55,6 +57,19 @@ object MyList {
 
   def length[A](as: MyList[A]): Int =
     foldRight(as, 0)((_, n) => n+1)
+
+  @tailrec
+  def foldLeft[A, B](as: MyList[A], z: B)(f: (B, A) => B): B =
+    as match {
+      case MyNil => z
+      case MyCons(h, t) => foldLeft(t, f(z, h))(f)
+    }
+
+  def sumLeft(ns: MyList[Int]): Int =
+    foldLeft(ns, 0)(_ + _)
+
+  def lengthLeft(ns: MyList[Int]): Int =
+    foldLeft(ns, 0)((n, _) => n+1)
 }
 
 

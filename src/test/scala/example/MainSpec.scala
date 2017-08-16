@@ -103,4 +103,19 @@ class MainSpec extends FlatSpec with Matchers {
     val as: MyList[String] = MyList("a", "b", "c", "d", "e")
     MyList.length(as) shouldEqual 5
   }
+
+  "the foldLeft sum method" should "correctly sum a list" in {
+    val as: MyList[Int] = MyList(1, 2, 3, 4, 5)
+    MyList.sumLeft(as) shouldEqual 15
+  }
+
+  "the foldLeft sum method" should "sum an empty list to zero" in {
+    val as: MyList[Int] = MyList()
+    MyList.sumLeft(as) shouldEqual 0.0
+  }
+
+  "the foldLeft length method" should "count a list's length correctly" in {
+    val as: MyList[Int] = MyList(1, 2, 3, 2)
+    MyList.lengthLeft(as) shouldEqual 4
+  }
 }
