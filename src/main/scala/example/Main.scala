@@ -41,6 +41,20 @@ object MyList {
     case MyNil => MyNil
   }
 
+  def foldRight[A, B](as: MyList[A], z: B)(f: (A, B) => B): B =
+    as match {
+      case MyNil => z
+      case MyCons(x, xs) => f(x, foldRight(xs, z)(f))
+    }
+
+  def product2(ns: MyList[Double]): Double =
+    foldRight(ns, 1.0)(_ * _)
+
+  def sum2(ns: MyList[Int]): Int =
+    foldRight(ns, 0)(_ + _)
+
+  def length[A](as: MyList[A]): Int =
+    foldRight(as, 0)((_, n) => n+1)
 }
 
 

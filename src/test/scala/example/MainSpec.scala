@@ -73,4 +73,34 @@ class MainSpec extends FlatSpec with Matchers {
     val as: MyList[Int] = MyList(1)
     MyList.init(as) shouldEqual MyList()
   }
+
+  "the sum2 method" should "correctly sum a list" in {
+    val as: MyList[Int] = MyList(1, 2, 3, 4, 5)
+    MyList.sum2(as) shouldEqual 15
+  }
+
+  "the sum2 method" should "sum an empty list to 0" in {
+    val as: MyList[Int] = MyList()
+    MyList.sum2(as) shouldEqual 0
+  }
+
+  "the product2 method" should "correctly calculate the product of a list" in {
+    val as: MyList[Double] = MyList(1, 2, 3, 4, 5)
+    MyList.product2(as) shouldEqual 120
+  }
+
+  "the product2 method" should "calculate the product of an empty list as 1" in {
+    val as: MyList[Double] = MyList()
+    MyList.product2(as) shouldEqual 1
+  }
+
+  "the length method" should "calculate the length of an empty list as 0" in {
+    val as: MyList[Double] = MyList()
+    MyList.length(as) shouldEqual 0
+  }
+
+  "the length method" should "correctly calculate the length of any list" in {
+    val as: MyList[String] = MyList("a", "b", "c", "d", "e")
+    MyList.length(as) shouldEqual 5
+  }
 }
