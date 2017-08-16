@@ -1,20 +1,29 @@
 package example
 
 
+sealed trait MyList[+A]
+case object MyNil extends MyList[Nothing]
+case class MyCons[+A](h: A, t: MyList[A]) extends MyList[A]
+
+
+object MyList {
+  def sum(ints: MyList[Int]): Int = ints match {
+    case MyNil => 0
+    case MyCons(x, xs) => x + sum(xs)
+  }
+
+  def product(ds: MyList[Double]): Double = ds match {
+    case MyNil => 1.0
+    case MyCons(0.0, _) => 0.0
+    case MyCons(x, xs) => x * product(xs)
+  }
+
+  def apply[A](as: A*): MyList[A] =
+    if (as.isEmpty) MyNil
+    else MyCons(as.head, apply(as.tail: _*))
+}
+
+
 object Main extends App {
-  def partial1[A, B,C](a: A, f: (A, B) => C): B => C = {
-    (b: B) => f(a,b)
-  }
 
-  def curry[A, B, C](f: (A, B) => C) : A => (B => C) = {
-    (a: A) => (b: B) => f(a, b)
-  }
-
-  def uncurry[A, B, C](f: (A => (B => C))): (A, B) => C = {
-    (a, b) => f(a)(b)
-  }
-
-  def compose[A, B, C](f: B => C, g: A => B): A => C = {
-    a => f(g(a))
-  }
 }
