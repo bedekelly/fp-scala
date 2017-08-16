@@ -29,6 +29,12 @@ object MyList {
       else MyNil
   }
 
+  def append[A](a1: MyList[A], a2: MyList[A]): MyList[A] =
+    a1 match {
+      case MyNil => a2
+      case MyCons(x, xs) => MyCons(x, append(xs, a2))
+    }
+
 }
 
 

@@ -40,4 +40,22 @@ class MainSpec extends FlatSpec with Matchers {
     def smallEnough(x: Int): Boolean = x < 10
     MyList.dropWhile(as, smallEnough) shouldEqual MyList(1, 2, 3, 4, 5)
   }
+
+  "the append method" should "join two lists together" in {
+    val as: MyList[Int] = MyList(1, 2, 3)
+    val bs: MyList[Int] = MyList(4, 5, 6)
+    MyList.append(as, bs) shouldEqual MyList(1, 2, 3, 4, 5, 6)
+  }
+
+  "the append method" should "join an empty list to a populated list by returning the populated list" in {
+    val as: MyList[Int] = MyList()
+    val bs: MyList[Int] = MyList(1, 2, 3)
+    MyList.append(as, bs) shouldEqual MyList(1, 2, 3)
+  }
+
+  "the append method" should "join a populated list to an empty list by returning the populated list" in {
+    val as: MyList[Int] = MyList(1, 2, 3)
+    val bs: MyList[Int] = MyList()
+    MyList.append(as, bs) shouldEqual MyList(1, 2, 3)
+  }
 }
